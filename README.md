@@ -1,16 +1,14 @@
 # Void Minded
 
-A musical composition chords helper.
+## Project description
+Void Minded was born from the idea of helping me to compose my music. Since June 2018 I joined
+the Void Shelter band in Nantes in which I try to improve my musical knowledge and my learning
+of my instrument, I'm a guitar player.
 
-## Getting Started
+Also I wanted to find a personal interest in an extra-professional project and show to future
+employers my willingness and ability to explore tools.
 
-This project is a starting point for a Flutter application.
+So I had the idea to develop a musical composition chords helper for me and my band.
 
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
-
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+## Versions
+18/11/2020 - 0.0.0 Starting the project
