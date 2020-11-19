@@ -1,4 +1,4 @@
-# void_minded
+# Void Minded
 
 A musical composition chords helper.
 
