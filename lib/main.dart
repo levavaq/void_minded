@@ -10,7 +10,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      title: 'Void Minded',
       theme: ThemeData(
         // This is the theme of your application.
         //
@@ -27,7 +27,7 @@ class MyApp extends StatelessWidget {
         // closer together (more dense) than on mobile platforms.
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      home: MyHomePage(title: 'Flutter Demo Home Page'),
+      home: MyHomePage(title: 'Get the chord you want'),
     );
   }
 }
@@ -51,10 +51,26 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  String _json_chord = "";
+  final _notations = ['English','Latin/Standard'];
+  String _currentNotation = 'English';
+
+  final _chords_EN = ['A','B','C','D','E','F','G'];
+  final _chords_SD = ['La','Si','Do','Re','Mi','Fa','Sol'];
+  List<String> _chords = ['A','B','C','D','E','F','G'];
+  String _currentChord = 'A';
+
+  final _qualities = ['maj','min'];
+  String _currentQuality = '';
+
+  final _tensions = ['','5','7','maj7','9'];
+  String _currentTension = '';
+
+  String _json_chord = '';
+  String _chord_name = 'A';
+
 
   void _incrementCounter() async {
-    Response response = await get("https://api.uberchord.com/v1/chords/F_maj7");
+    Response response = await get("https://api.uberchord.com/v1/chords/" + _chord_name);
     // sample info available in response
     int statusCode = response.statusCode;
     Map<String, String> headers = response.headers;
@@ -68,6 +84,29 @@ class _MyHomePageState extends State<MyHomePage> {
       // _counter without calling setState(), then the build method would not be
       // called again, and so nothing would appear to happen.
       _json_chord = lol;
+    });
+  }
+
+  void _changeChordName() {
+    setState(() {
+      if(_currentQuality.isNotEmpty || _currentTension.isNotEmpty) {
+        _chord_name = _currentChord + '_' + _currentQuality + _currentTension;
+      } else {
+        _chord_name = _currentChord;
+      }
+    });
+  }
+
+  void _changeNotation() {
+    setState(() {
+      if(_currentNotation == "English") {
+        _chords = _chords_EN;
+        _currentChord = 'A';
+      } else {
+        _chords = _chords_SD;
+        _currentChord = 'La';
+      }
+      _changeChordName();
     });
   }
 
@@ -106,20 +145,92 @@ class _MyHomePageState extends State<MyHomePage> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             Text(
-              'You have pushed the button this many times:',
+              'Choose your prefered notation',
+            ),
+            DropdownButton<String>(
+                items: _notations.map((String value){
+                  return DropdownMenuItem<String>(
+                      value: value,
+                      child: Text(value)
+                  );
+                }).toList(),
+                value: _currentNotation,
+                onChanged: (String value) {
+                  setState(() {
+                    this._currentNotation = value;
+                    _changeNotation();
+                  });
+                }
+            ),
+            Text(
+              'Choose you chord',
+            ),
+            Row(
+              children: <Widget>[
+                DropdownButton<String>(
+                    items: _chords.map((String value){
+                      return DropdownMenuItem<String>(
+                          value: value,
+                          child: Text(value)
+                      );
+                    }).toList(),
+                    value: _currentChord,
+                    onChanged: (String value) {
+                      setState(() {
+                        this._currentChord = value;
+                        _changeChordName();
+                        _incrementCounter();
+                      });
+                    }
+                ),DropdownButton<String>(
+                    items: _qualities.map((String value){
+                      return DropdownMenuItem<String>(
+                          value: value,
+                          child: Text(value)
+                      );
+                    }).toList(),
+                    value: _currentQuality,
+                    onChanged: (String value) {
+                      setState(() {
+                        this._currentQuality = value;
+                        _changeChordName();
+                        _incrementCounter();
+                      });
+                    }
+                ),DropdownButton<String>(
+                    items: _tensions.map((String value){
+                      return DropdownMenuItem<String>(
+                          value: value,
+                          child: Text(value)
+                      );
+                    }).toList(),
+                    value: _currentTension,
+                    onChanged: (String value) {
+                      setState(() {
+                        this._currentTension = value;
+                        _changeChordName();
+                        _incrementCounter();
+                      });
+                    }
+                )
+              ],
+            ),
+            Text(
+              '$_chord_name',
+              style: Theme.of(context).textTheme.headline2,
             ),
             Text(
               '$_json_chord',
-              style: Theme.of(context).textTheme.headline4,
+              style: Theme.of(context).textTheme.subtitle1,
             ),
           ],
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
         tooltip: 'Increment',
         child: Icon(Icons.add),
       ), // This trailing comma makes auto-formatting nicer for build methods.
     );
   }
+
 }
