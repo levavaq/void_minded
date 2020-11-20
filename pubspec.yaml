@@ -15,20 +15,29 @@ publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 # In iOS, build-name is used as CFBundleShortVersionString while build-number used as CFBundleVersion.
 # Read more about iOS versioning at
 # https://developer.apple.com/library/archive/documentation/General/Reference/InfoPlistKeyReference/Articles/CoreFoundationKeys.html
-version: 1.1.0
+version: 1.2.0-SNAPSHOT
+
+#  major - I've essentially made a new app. It's broken backwards-compatibility and has a completely new user experience.
+#    minor - I've introduced new features
+#      patch - I've made bugfixes
+
 
 environment:
   sdk: ">=2.7.0 <3.0.0"
 
+### DEPENDENCIES ###
 dependencies:
+  # Flutter SDK
   flutter:
     sdk: flutter
+  # This is used to get information from the UberChord API
+  http: 0.12.2
+  # The following is used to develop this application with a MVC approach
+  mvc_pattern: 6.6.0
 
-
-  # The following adds the Cupertino Icons font to your application.
+  # This adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.0
-  http: any
 
 dev_dependencies:
   flutter_test:
