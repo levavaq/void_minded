@@ -54,8 +54,8 @@ class _MyHomePageState extends State<MyHomePage> {
   final _notations = ["English","Latin/Standard"];
   String _currentNotation = "English";
 
-  final _chords_EN = ["A","B","C","D","E","F","G"];
-  final _chords_SD = ["La","Si","Do","Re","Mi","Fa","Sol"];
+  final chordsEN = ["A","B","C","D","E","F","G"];
+  final chordsSD = ["La","Si","Do","Re","Mi","Fa","Sol"];
   List<String> _chords = ["A","B","C","D","E","F","G"];
   String _currentChord = "A";
   int _currentIndex = 0;
@@ -66,17 +66,13 @@ class _MyHomePageState extends State<MyHomePage> {
   final _tensions = ["","5","7","maj7","9"];
   String _currentTension = "";
 
-  String _json_chord = "";
-  String _chord_name = "A";
-  String _chord_API = "A";
+  String jsonChord = "";
+  String chordName = "A";
+  String chordApi = "A";
 
 
   void _incrementCounter() async {
-    Response response = await get("https://api.uberchord.com/v1/chords/" + _chord_API);
-    // sample info available in response
-    int statusCode = response.statusCode;
-    Map<String, String> headers = response.headers;
-    String contentType = headers['content-type'];
+    Response response = await get("https://api.uberchord.com/v1/chords/" + chordApi);
     String lol = response.body;
 
     setState(() {
@@ -85,25 +81,25 @@ class _MyHomePageState extends State<MyHomePage> {
       // so that the display can reflect the updated values. If we changed
       // _counter without calling setState(), then the build method would not be
       // called again, and so nothing would appear to happen.
-      _json_chord = lol;
+      jsonChord = lol;
     });
   }
 
   void _changeChordName() {
     setState(() {
       if(_currentNotation != "English") {
-        _chord_API = _chords_EN.elementAt(_currentIndex);
+        chordApi = chordsEN.elementAt(_currentIndex);
       } else {
-        _chord_API = _currentChord;
+        chordApi = _currentChord;
       }
-      _chord_name = _currentChord;
+      chordName = _currentChord;
 
       if(_currentQuality == "min") {
-        _chord_API += "_m" + _currentTension;
-        _chord_name += "_m" + _currentTension;
+        chordApi += "_m" + _currentTension;
+        chordName += "_m" + _currentTension;
       } else if(_currentTension.isNotEmpty){
-        _chord_API += "_" + _currentTension;
-        _chord_name += "_" + _currentTension;
+        chordApi += "_" + _currentTension;
+        chordName += "_" + _currentTension;
       }
     });
   }
@@ -111,9 +107,9 @@ class _MyHomePageState extends State<MyHomePage> {
   void _changeNotation() {
     setState(() {
       if(_currentNotation == "English") {
-        _chords = _chords_EN;
+        _chords = chordsEN;
       } else {
-        _chords = _chords_SD;
+        _chords = chordsSD;
       }
       _currentChord = _chords.elementAt(_currentIndex);
       _changeChordName();
@@ -229,20 +225,16 @@ class _MyHomePageState extends State<MyHomePage> {
               ],
             ),
             Text(
-              '$_chord_name',
+              '$chordName',
               style: Theme.of(context).textTheme.headline2,
             ),
             Text(
-              '$_json_chord',
+              '$jsonChord',
               style: Theme.of(context).textTheme.subtitle1,
             ),
           ],
         ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        tooltip: 'Increment',
-        child: Icon(Icons.add),
-      ), // This trailing comma makes auto-formatting nicer for build methods.
+      )// This trailing comma makes auto-formatting nicer for build methods.
     );
   }
 
