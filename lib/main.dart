@@ -98,10 +98,10 @@ class _MyHomePageState extends State<MyHomePage> {
 
       if(_currentQuality == "min") {
         chordApi += "_m" + _currentTension;
-        chordName += "_m" + _currentTension;
+        chordName += "m" + _currentTension;
       } else if(_currentTension.isNotEmpty){
         chordApi += "_" + _currentTension;
-        chordName += "_" + _currentTension;
+        chordName += _currentTension;
       }
     });
   }
