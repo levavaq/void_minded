@@ -12,6 +12,6 @@ So I had the idea to develop a musical composition chords helper for me and my b
 
 ## Versions
 - 20/11/2020 | 1.3.0-SNAPSHOT | Adding MVC approach from https://pub.dev/packages/mvc_pattern
-- 20/11/2020 | 1.2.0 | Creating an icon for the app with flutter_launcher_icons
-- 20/11/2020 | 1.1.0 | Choose a chord with DropDownButtons & switch musical notation
-- 18/11/2020 | 1.0.0 | Starting the project & using UberChord API (https://api.uberchord.com/#what-is-uberchord-api)
+- 20/11/2020 | 1.2.0 | Creating icon for the app with flutter_launcher_icons
+- 20/11/2020 | 1.1.0 | Choose chord with DropDownButtons & switch musical notation
+- 18/11/2020 | 1.0.0 | Starting project & using UberChord API (https://api.uberchord.com/#what-is-uberchord-api)
