@@ -51,26 +51,28 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  final _notations = ['English','Latin/Standard'];
-  String _currentNotation = 'English';
+  final _notations = ["English","Latin/Standard"];
+  String _currentNotation = "English";
 
-  final _chords_EN = ['A','B','C','D','E','F','G'];
-  final _chords_SD = ['La','Si','Do','Re','Mi','Fa','Sol'];
-  List<String> _chords = ['A','B','C','D','E','F','G'];
-  String _currentChord = 'A';
+  final _chords_EN = ["A","B","C","D","E","F","G"];
+  final _chords_SD = ["La","Si","Do","Re","Mi","Fa","Sol"];
+  List<String> _chords = ["A","B","C","D","E","F","G"];
+  String _currentChord = "A";
+  int _currentIndex = 0;
 
-  final _qualities = ['maj','min'];
-  String _currentQuality = '';
+  final _qualities = ["maj","min"];
+  String _currentQuality = "maj";
 
-  final _tensions = ['','5','7','maj7','9'];
-  String _currentTension = '';
+  final _tensions = ["","5","7","maj7","9"];
+  String _currentTension = "";
 
-  String _json_chord = '';
-  String _chord_name = 'A';
+  String _json_chord = "";
+  String _chord_name = "A";
+  String _chord_API = "A";
 
 
   void _incrementCounter() async {
-    Response response = await get("https://api.uberchord.com/v1/chords/" + _chord_name);
+    Response response = await get("https://api.uberchord.com/v1/chords/" + _chord_API);
     // sample info available in response
     int statusCode = response.statusCode;
     Map<String, String> headers = response.headers;
@@ -89,10 +91,19 @@ class _MyHomePageState extends State<MyHomePage> {
 
   void _changeChordName() {
     setState(() {
-      if(_currentQuality.isNotEmpty || _currentTension.isNotEmpty) {
-        _chord_name = _currentChord + '_' + _currentQuality + _currentTension;
+      if(_currentNotation != "English") {
+        _chord_API = _chords_EN.elementAt(_currentIndex);
       } else {
-        _chord_name = _currentChord;
+        _chord_API = _currentChord;
+      }
+      _chord_name = _currentChord;
+
+      if(_currentQuality == "min") {
+        _chord_API += "_m" + _currentTension;
+        _chord_name += "_m" + _currentTension;
+      } else if(_currentTension.isNotEmpty){
+        _chord_API += "_" + _currentTension;
+        _chord_name += "_" + _currentTension;
       }
     });
   }
@@ -101,11 +112,10 @@ class _MyHomePageState extends State<MyHomePage> {
     setState(() {
       if(_currentNotation == "English") {
         _chords = _chords_EN;
-        _currentChord = 'A';
       } else {
         _chords = _chords_SD;
-        _currentChord = 'La';
       }
+      _currentChord = _chords.elementAt(_currentIndex);
       _changeChordName();
     });
   }
@@ -177,12 +187,14 @@ class _MyHomePageState extends State<MyHomePage> {
                     value: _currentChord,
                     onChanged: (String value) {
                       setState(() {
+                        _currentIndex = _chords.indexOf(value);
                         this._currentChord = value;
                         _changeChordName();
                         _incrementCounter();
                       });
                     }
-                ),DropdownButton<String>(
+                ),
+                DropdownButton<String>(
                     items: _qualities.map((String value){
                       return DropdownMenuItem<String>(
                           value: value,
@@ -197,7 +209,8 @@ class _MyHomePageState extends State<MyHomePage> {
                         _incrementCounter();
                       });
                     }
-                ),DropdownButton<String>(
+                ),
+                DropdownButton<String>(
                     items: _tensions.map((String value){
                       return DropdownMenuItem<String>(
                           value: value,
