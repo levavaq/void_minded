@@ -1,5 +1,7 @@
 # Void Minded
 
+![VoidMinded_Github](https://user-images.githubusercontent.com/18574947/99813287-c607bb80-2b47-11eb-9183-07815438e154.png)
+
 ## Project description
 Void Minded was born from the idea of helping me to compose my music. Since June 2018 I joined
 the Void Shelter band in Nantes in which I try to improve my musical knowledge and my learning
