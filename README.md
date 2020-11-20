@@ -11,4 +11,5 @@ employers my willingness and ability to explore tools.
 So I had the idea to develop a musical composition chords helper for me and my band.
 
 ## Versions
-18/11/2020 - 0.0.0 Starting the project
+20/11/2020 - 1.1.0 Choose a chord with DropDownButtons & switch musical notation
+18/11/2020 - 1.0.0 Starting the project & using UberChord API
