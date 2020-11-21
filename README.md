@@ -21,6 +21,6 @@ https://docs.google.com/document/d/1LljP2HWJPLUFerCBMlZRpEYOjHXFPuSeSjA7wbM6I-A/
 
 ## Versions
 - 20/11/2020 | 1.3.0-SNAPSHOT | Adding MVC approach from https://pub.dev/packages/mvc_pattern
-- 20/11/2020 | 1.2.0 | Creating icon for the app with flutter_launcher_icons
+- 20/11/2020 | 1.2.0 | Creating icon for the app with flutter_launcher_icons & Splash Screen
 - 20/11/2020 | 1.1.0 | Choose chord with DropDownButtons & switch musical notation
 - 18/11/2020 | 1.0.0 | Starting project & using UberChord API (https://api.uberchord.com/#what-is-uberchord-api)
