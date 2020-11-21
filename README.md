@@ -8,9 +8,16 @@ the Void Shelter band in Nantes in which I try to improve my musical knowledge a
 of my instrument, I'm a guitar player.
 
 Also I wanted to find a personal interest in an extra-professional project and show to future
-employers my willingness and ability to explore tools.
+employers my willingness and ability to explore tools. In addition, this is my first Flutter project.
 
-So I had the idea to develop a musical composition chords helper for me and my band.
+So I had the idea to develop a musical composition chords helper, firstly for me and my band.
+
+## Documentation (french)
+On this Google Sheet link you could find all information I wrote during the conception et the 
+development of Void Minded. Besides the code, I tried to make the most complete document I can 
+in which I put some ideas for the application and some technical specifications and style guide.
+
+https://docs.google.com/document/d/1LljP2HWJPLUFerCBMlZRpEYOjHXFPuSeSjA7wbM6I-A/edit?usp=sharing
 
 ## Versions
 - 20/11/2020 | 1.3.0-SNAPSHOT | Adding MVC approach from https://pub.dev/packages/mvc_pattern
