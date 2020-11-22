@@ -142,54 +142,75 @@ class _MyHomePageState extends State<MyHomePage> {
             Container(
               child: Row(
                 children: <Widget>[
-                  DropdownButton<String>(
-                    items: _chords.map((String value){
-                      return DropdownMenuItem<String>(
-                          value: value,
-                          child: Text(value)
-                      );
-                    }).toList(),
-                    value: _currentChord,
-                    onChanged: (String value) {
-                      setState(() {
-                        _currentIndex = _chords.indexOf(value);
-                        this._currentChord = value;
-                        _changeChordName();
-                        _incrementCounter();
-                      });
-                    }
+                  Expanded(
+                    flex: 1,
+                    child: DropdownButton<String>(
+                        items: _chords.map((String value){
+                          return DropdownMenuItem<String>(
+                              value: value,
+                              child: Text(value)
+                          );
+                        }).toList(),
+                        value: _currentChord,
+                        onChanged: (String value) {
+                          setState(() {
+                            _currentIndex = _chords.indexOf(value);
+                            this._currentChord = value;
+                            _changeChordName();
+                            _incrementCounter();
+                          });
+                        }
+                    ),
                   ),
-                  DropdownButton<String>(
-                    items: _qualities.map((String value){
-                      return DropdownMenuItem<String>(
-                          value: value,
-                          child: Text(value)
-                      );
-                    }).toList(),
-                    value: _currentQuality,
-                    onChanged: (String value) {
-                      setState(() {
-                        this._currentQuality = value;
-                        _changeChordName();
-                        _incrementCounter();
-                      });
-                    }
+                  Expanded(
+                    flex: 1,
+                    child: Column(
+                      children: <Widget>[
+                        RadioListTile<String>(
+                          title: Text(_qualities[0]),
+                          value: _qualities[0],
+                          groupValue: this._currentQuality,
+                          onChanged: (String value) {
+                            setState(() {
+                              this._currentQuality = value;
+                              _changeChordName();
+                              _incrementCounter();
+                            });
+                          },
+                        ),
+                        RadioListTile<String>(
+                          title: Text(_qualities[1]),
+                          value: _qualities[1],
+                          groupValue: this._currentQuality,
+                          onChanged: (String value) {
+                            setState(() {
+                              this._currentQuality = value;
+                              _changeChordName();
+                              _incrementCounter();
+                            });
+                          },
+                        ),
+                      ],
+                    ),
                   ),
-                  DropdownButton<String>(
-                    items: _tensions.map((String value){
-                      return DropdownMenuItem<String>(
-                          value: value,
-                          child: Text(value)
-                      );
-                    }).toList(),
-                    value: _currentTension,
-                    onChanged: (String value) {
-                      setState(() {
-                        this._currentTension = value;
-                        _changeChordName();
-                        _incrementCounter();
-                      });
-                    }
+                  Expanded(
+                    flex: 1,
+                    child: DropdownButton<String>(
+                      items: _tensions.map((String value){
+                        return DropdownMenuItem<String>(
+                            value: value,
+                            child: Text(value)
+                        );
+                      }).toList(),
+                      value: _currentTension,
+                      onChanged: (String value) {
+                        setState(() {
+                          this._currentTension = value;
+                          _changeChordName();
+                          _incrementCounter();
+                        });
+                      }
+                    ),
                   )
                 ],
               )
