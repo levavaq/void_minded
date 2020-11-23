@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:void_minded/services/auth.dart';
 
-class SignIn extends StatefulWidget {
+class Register extends StatefulWidget {
   final Function toggleView;
 
-  SignIn({this.toggleView});
+  Register({this.toggleView});
 
   @override
-  _SignInState createState() => _SignInState();
+  _RegisterState createState() => _RegisterState();
 }
 
-class _SignInState extends State<SignIn> {
+class _RegisterState extends State<Register> {
   final AuthService _authService = AuthService();
 
   // text field state
@@ -24,11 +24,11 @@ class _SignInState extends State<SignIn> {
       appBar: AppBar(
         backgroundColor: Colors.brown[400],
         elevation: 0.0,
-        title: Text("Sign in to Void Minded"),
+        title: Text("Sign up to Void Minded"),
         actions: <Widget>[
           FlatButton.icon(
             icon: Icon(Icons.person),
-            label: Text("Register"),
+            label: Text("Sign in"),
             onPressed: () {
               widget.toggleView();
             },
@@ -57,7 +57,7 @@ class _SignInState extends State<SignIn> {
                   ),
                   SizedBox(height: 20.0),
                   RaisedButton(
-                    child: Text("Sign in"),
+                    child: Text("Register"),
                     onPressed: () async {
                       print(email);
                       print(password);
@@ -65,22 +65,6 @@ class _SignInState extends State<SignIn> {
                   ),
                 ],
               )),
-              RaisedButton(
-                color: Colors.pink,
-                child: Text(
-                  "Sign in anonymously",
-                  style: TextStyle(color: Colors.white),
-                ),
-                onPressed: () async {
-                  dynamic result = await _authService.signInAnonymously();
-                  if (result == null) {
-                    print("error signing in");
-                  } else {
-                    print("signed in");
-                    print(result.uid);
-                  }
-                },
-              ),
             ],
           )),
     );
