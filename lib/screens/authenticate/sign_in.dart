@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:void_minded/services/auth.dart';
+import 'package:void_minded/shared/constants.dart';
 
 class SignIn extends StatefulWidget {
   final Function toggleView;
@@ -12,10 +13,12 @@ class SignIn extends StatefulWidget {
 
 class _SignInState extends State<SignIn> {
   final AuthService _authService = AuthService();
+  final _formKey = GlobalKey<FormState>();
 
   // text field state
   String email = "";
   String password = "";
+  String error = "";
 
   @override
   Widget build(BuildContext context) {
@@ -40,31 +43,52 @@ class _SignInState extends State<SignIn> {
           child: Column(
             children: <Widget>[
               Form(
+                  key: _formKey,
                   child: Column(
-                children: <Widget>[
-                  SizedBox(height: 20.0),
-                  TextFormField(
-                    onChanged: (emailValue) {
-                      setState(() => email = emailValue);
-                    },
-                  ),
-                  SizedBox(height: 20.0),
-                  TextFormField(
-                    obscureText: true,
-                    onChanged: (passwordValue) {
-                      setState(() => password = passwordValue);
-                    },
-                  ),
-                  SizedBox(height: 20.0),
-                  RaisedButton(
-                    child: Text("Sign in"),
-                    onPressed: () async {
-                      print(email);
-                      print(password);
-                    },
-                  ),
-                ],
-              )),
+                    children: <Widget>[
+                      SizedBox(height: 20.0),
+                      TextFormField(
+                        decoration: textInputDecoration.copyWith(
+                            hintText: "example@gmail.com"),
+                        validator: (emailValue) =>
+                            emailValue.isEmpty ? "Enter an email" : null,
+                        onChanged: (emailValue) {
+                          setState(() => email = emailValue);
+                        },
+                      ),
+                      SizedBox(height: 20.0),
+                      TextFormField(
+                        decoration:
+                            textInputDecoration.copyWith(hintText: "password"),
+                        obscureText: true,
+                        validator: (passwordValue) => passwordValue.length < 6
+                            ? "Enter a password 6+ chars long"
+                            : null,
+                        onChanged: (passwordValue) {
+                          setState(() => password = passwordValue);
+                        },
+                      ),
+                      SizedBox(height: 20.0),
+                      RaisedButton(
+                        child: Text("Sign in"),
+                        onPressed: () async {
+                          if (_formKey.currentState.validate()) {
+                            dynamic result = await _authService
+                                .signInWithEmailAndPassword(email, password);
+                            if (result == null) {
+                              setState(() => error =
+                                  "Could not sign in with those credentials");
+                            }
+                          }
+                        },
+                      ),
+                      SizedBox(height: 12.0),
+                      Text(
+                        error,
+                        style: TextStyle(color: Colors.red, fontSize: 14.0),
+                      ),
+                    ],
+                  )),
               RaisedButton(
                 color: Colors.pink,
                 child: Text(
