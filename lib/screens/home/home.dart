@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
+import 'package:provider/provider.dart';
+import 'package:void_minded/models/mind.dart';
+import 'package:void_minded/screens/home/minds_list.dart';
 import 'package:void_minded/services/auth.dart';
+import 'package:void_minded/services/database.dart';
 
 class Home extends StatefulWidget {
   @override
@@ -32,7 +36,7 @@ class _HomeState extends State<Home> {
 
   void _incrementCounter() async {
     Response response =
-    await get("https://api.uberchord.com/v1/chords/" + chordApi);
+        await get("https://api.uberchord.com/v1/chords/" + chordApi);
     String lol = response.body;
 
     setState(() {
@@ -104,118 +108,123 @@ class _HomeState extends State<Home> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        appBar: AppBar(
-          title: Text("Void Minded"),
-          actions: <Widget>[
-            FlatButton.icon(
-              icon: Icon(Icons.person),
-              label: Text("logout"),
-              onPressed: () async {
-                await _authService.signOut();
-              },
-            ),
-          ],
-        ),
-        body: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              Container(
-                  child: Column(children: <Widget>[
-                    Text(
-                      '$chordName',
-                      style: Theme.of(context).textTheme.headline1,
-                    ),
-                    Text(
-                      '$jsonChord',
-                      style: Theme.of(context).textTheme.subtitle1,
-                    ),
-                  ])),
-              const Divider(
-                color: Colors.black,
-                height: 20,
-                thickness: 5,
-                indent: 20,
-                endIndent: 0,
+    return StreamProvider<List<Mind>>.value(
+      value: DatabaseService().minds,
+      child: Scaffold(
+          appBar: AppBar(
+            title: Text("Void Minded"),
+            actions: <Widget>[
+              FlatButton.icon(
+                icon: Icon(Icons.person),
+                label: Text("logout"),
+                onPressed: () async {
+                  await _authService.signOut();
+                },
               ),
-              Container(
-                child: Row(children: <Widget>[
-                  Expanded(
-                    flex: 1,
-                    child: DropdownButton<String>(
-                        items: _chords.map((String value) {
-                          return DropdownMenuItem<String>(
-                              value: value, child: Text(value));
-                        }).toList(),
-                        value: _currentChord,
-                        onChanged: (String value) {
-                          setState(() {
-                            _currentIndex = _chords.indexOf(value);
-                            this._currentChord = value;
-                            _changeChordName();
-                            _incrementCounter();
-                          });
-                        }),
-                  ),
-                  Expanded(
-                    flex: 1,
+            ],
+          ),
+          body: Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                // A ENLEVER
+                Expanded(flex: 1, child: MindsList()),
+                Container(
                     child: Column(children: <Widget>[
-                      for (var quality in _qualities)
-                        RadioListTile<String>(
-                          title: Text(quality),
-                          value: quality,
-                          groupValue: this._currentQuality,
+                  Text(
+                    '$chordName',
+                    style: Theme.of(context).textTheme.headline1,
+                  ),
+                  Text(
+                    '$jsonChord',
+                    style: Theme.of(context).textTheme.subtitle1,
+                  ),
+                ])),
+                const Divider(
+                  color: Colors.black,
+                  height: 20,
+                  thickness: 5,
+                  indent: 20,
+                  endIndent: 0,
+                ),
+                Container(
+                  child: Row(children: <Widget>[
+                    Expanded(
+                      flex: 1,
+                      child: DropdownButton<String>(
+                          items: _chords.map((String value) {
+                            return DropdownMenuItem<String>(
+                                value: value, child: Text(value));
+                          }).toList(),
+                          value: _currentChord,
                           onChanged: (String value) {
                             setState(() {
-                              this._currentQuality = value;
+                              _currentIndex = _chords.indexOf(value);
+                              this._currentChord = value;
                               _changeChordName();
                               _incrementCounter();
                             });
-                          },
-                        ),
-                    ]),
-                  ),
-                  Expanded(
+                          }),
+                    ),
+                    Expanded(
                       flex: 1,
                       child: Column(children: <Widget>[
-                        for (int i = 0; i < _tensions.length; i++)
-                          CheckboxListTile(
-                              title: Text(_tensions[i]),
-                              value: _isTensionsChecked[i],
-                              onChanged: (bool value) {
-                                setState(() {
-                                  _isTensionsChecked[i] = value;
-                                  _updateCheckBoxTensionsState(i);
-                                  _changeCurrentTension();
-                                  _changeChordName();
-                                  _incrementCounter();
-                                });
-                              })
-                      ])),
-                ]),
-              ),
-              Container(
-                  child: Column(children: <Widget>[
-                    Text(
-                      'Choose your prefered notation',
+                        for (var quality in _qualities)
+                          RadioListTile<String>(
+                            title: Text(quality),
+                            value: quality,
+                            groupValue: this._currentQuality,
+                            onChanged: (String value) {
+                              setState(() {
+                                this._currentQuality = value;
+                                _changeChordName();
+                                _incrementCounter();
+                              });
+                            },
+                          ),
+                      ]),
                     ),
-                    DropdownButton<String>(
-                        items: _notations.map((String value) {
-                          return DropdownMenuItem<String>(
-                              value: value, child: Text(value));
-                        }).toList(),
-                        value: _currentNotation,
-                        onChanged: (String value) {
-                          setState(() {
-                            this._currentNotation = value;
-                            _changeNotation();
-                          });
-                        })
-                  ]))
-            ],
+                    Expanded(
+                        flex: 1,
+                        child: Column(children: <Widget>[
+                          for (int i = 0; i < _tensions.length; i++)
+                            CheckboxListTile(
+                                title: Text(_tensions[i]),
+                                value: _isTensionsChecked[i],
+                                onChanged: (bool value) {
+                                  setState(() {
+                                    _isTensionsChecked[i] = value;
+                                    _updateCheckBoxTensionsState(i);
+                                    _changeCurrentTension();
+                                    _changeChordName();
+                                    _incrementCounter();
+                                  });
+                                })
+                        ])),
+                  ]),
+                ),
+                Container(
+                    child: Column(children: <Widget>[
+                  Text(
+                    'Choose your prefered notation',
+                  ),
+                  DropdownButton<String>(
+                      items: _notations.map((String value) {
+                        return DropdownMenuItem<String>(
+                            value: value, child: Text(value));
+                      }).toList(),
+                      value: _currentNotation,
+                      onChanged: (String value) {
+                        setState(() {
+                          this._currentNotation = value;
+                          _changeNotation();
+                        });
+                      })
+                ]))
+              ],
+            ),
+          ) // This trailing comma makes auto-formatting nicer for build methods.
           ),
-        ) // This trailing comma makes auto-formatting nicer for build methods.
     );
   }
 }

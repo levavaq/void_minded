@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:void_minded/models/CustomUser.dart';
+import 'package:void_minded/models/custom_user.dart';
 import 'package:void_minded/screens/authenticate/authenticate.dart';
 import 'package:void_minded/screens/home/home.dart';
 
