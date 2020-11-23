@@ -32,6 +32,7 @@ dependencies:
     sdk: flutter
   # This is used to get information from the UberChord API
   http: 0.12.2
+
   # The following is used to develop this application with a MVC approach
   mvc_pattern: 6.6.0
 

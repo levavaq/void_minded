@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "73566626858",
+    "firebase_url": "https://void-minded.firebaseio.com",
+    "project_id": "void-minded",
+    "storage_bucket": "void-minded.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:73566626858:android:9a4309cd796fb1e3f70f53",
+        "android_client_info": {
+          "package_name": "com.levavaq.void_minded"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "73566626858-kpr5ftdh6cs9948k6bj0bufiku5r56pk.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAy9e7dGtaRPmL6VdOPk95XARdzHSoC0SQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "73566626858-kpr5ftdh6cs9948k6bj0bufiku5r56pk.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
