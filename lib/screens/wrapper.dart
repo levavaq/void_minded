@@ -1,11 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:void_minded/models/CustomUser.dart';
 import 'package:void_minded/screens/authenticate/authenticate.dart';
 import 'package:void_minded/screens/home/home.dart';
 
 class Wrapper extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    final user = Provider.of<CustomUser>(context);
+
     // Return either Home or Authenticate widget
-    return Authenticate();
+    if (user == null) {
+      return Authenticate();
+    } else {
+      return Home();
+    }
   }
 }

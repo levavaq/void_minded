@@ -36,6 +36,7 @@ dependencies:
   firebase_core: "^0.5.2"
   firebase_auth: "^0.18.3"
   cloud_firestore: "^0.14.3"
+  provider: "^4.3.2"
 
   # The following is used to develop this application with a MVC approach
   mvc_pattern: 6.6.0
