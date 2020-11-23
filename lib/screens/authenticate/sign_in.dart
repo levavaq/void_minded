@@ -27,9 +27,9 @@ class _SignInState extends State<SignIn> {
     return loading
         ? Loading()
         : Scaffold(
-            backgroundColor: Colors.brown[100],
+            backgroundColor: Color(0xFFFFFFFF),
             appBar: AppBar(
-              backgroundColor: Colors.brown[400],
+              backgroundColor: Color(0xFF222831),
               elevation: 0.0,
               title: Text("Sign in to Void Minded"),
               actions: <Widget>[
@@ -45,6 +45,7 @@ class _SignInState extends State<SignIn> {
             body: Container(
                 padding: EdgeInsets.symmetric(vertical: 20.0, horizontal: 50.0),
                 child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
                     Form(
                         key: _formKey,
@@ -53,7 +54,7 @@ class _SignInState extends State<SignIn> {
                             SizedBox(height: 20.0),
                             TextFormField(
                               decoration: textInputDecoration.copyWith(
-                                  hintText: "example@gmail.com"),
+                                  hintText: "Email"),
                               validator: (emailValue) =>
                                   emailValue.isEmpty ? "Enter an email" : null,
                               onChanged: (emailValue) {
@@ -63,7 +64,7 @@ class _SignInState extends State<SignIn> {
                             SizedBox(height: 20.0),
                             TextFormField(
                               decoration: textInputDecoration.copyWith(
-                                  hintText: "password"),
+                                  hintText: "Password"),
                               obscureText: true,
                               validator: (passwordValue) =>
                                   passwordValue.length < 6
@@ -101,7 +102,7 @@ class _SignInState extends State<SignIn> {
                           ],
                         )),
                     RaisedButton(
-                      color: Colors.pink,
+                      color: Color(0xFF001818),
                       child: Text(
                         "Sign in anonymously",
                         style: TextStyle(color: Colors.white),

@@ -45,6 +45,7 @@ class _RegisterState extends State<Register> {
             body: Container(
                 padding: EdgeInsets.symmetric(vertical: 20.0, horizontal: 50.0),
                 child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
                     Form(
                         key: _formKey,
