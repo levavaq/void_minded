@@ -13,7 +13,7 @@ employers my willingness and ability to explore tools. In addition, this is my f
 So I had the idea to develop a musical composition chords helper, firstly for me and my band.
 
 ## Documentation (french)
-On this Google Sheet link you could find all information I wrote during the conception et the 
+On this Google Sheet link you could find all information I wrote during the conception and the 
 development of Void Minded. Besides the code, I tried to make the most complete document I can 
 in which I put some ideas for the application and some technical specifications and style guide.
 
