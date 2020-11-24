@@ -101,6 +101,11 @@ class _SignInState extends State<SignIn> {
                             ),
                           ],
                         )),
+                    Image(
+                      width: 100.0,
+                      image: AssetImage(
+                          'lib/assets/images/void_minded_black_logo.png'),
+                    ),
                     RaisedButton(
                       color: Color(0xFF001818),
                       child: Text(
