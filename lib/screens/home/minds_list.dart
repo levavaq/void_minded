@@ -11,7 +11,7 @@ class MindsList extends StatefulWidget {
 class _MindsListState extends State<MindsList> {
   @override
   Widget build(BuildContext context) {
-    final minds = Provider.of<List<Mind>>(context);
+    final minds = Provider.of<List<Mind>>(context) ?? [];
 
     return ListView.builder(
       itemCount: minds.length,

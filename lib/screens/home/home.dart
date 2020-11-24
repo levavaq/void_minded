@@ -1,8 +1,10 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
 import 'package:provider/provider.dart';
 import 'package:void_minded/models/mind.dart';
 import 'package:void_minded/screens/home/minds_list.dart';
+import 'package:void_minded/screens/home/settings_form.dart';
 import 'package:void_minded/services/auth.dart';
 import 'package:void_minded/services/database.dart';
 
@@ -108,6 +110,17 @@ class _HomeState extends State<Home> {
 
   @override
   Widget build(BuildContext context) {
+    void _showSettingsPanel() {
+      showModalBottomSheet(
+          context: context,
+          builder: (context) {
+            return Container(
+              padding: EdgeInsets.symmetric(vertical: 20.0, horizontal: 60.0),
+              child: SettingsForm(),
+            );
+          });
+    }
+
     return StreamProvider<List<Mind>>.value(
       value: DatabaseService().minds,
       child: Scaffold(
@@ -120,6 +133,11 @@ class _HomeState extends State<Home> {
                 onPressed: () async {
                   await _authService.signOut();
                 },
+              ),
+              FlatButton.icon(
+                icon: Icon(Icons.settings),
+                label: Text("settings"),
+                onPressed: () => _showSettingsPanel(),
               ),
             ],
           ),

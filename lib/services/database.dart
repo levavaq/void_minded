@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:void_minded/models/custom_user.dart';
 import 'package:void_minded/models/mind.dart';
 
 class DatabaseService {
@@ -29,9 +30,23 @@ class DatabaseService {
     }).toList();
   }
 
+  // userData from snapshot
+  CustomUserData _userDataFromSnapshot(DocumentSnapshot snapshot) {
+    return CustomUserData(
+      uid: uid,
+      name: snapshot.data()["name"],
+      sugars: snapshot.data()["sugars"],
+      strength: snapshot.data()["strength"],
+    );
+  }
+
   // get minds stream
   Stream<List<Mind>> get minds {
-    return mindedCollection.snapshots()
-    .map(_mindListFromSnapshot);
+    return mindedCollection.snapshots().map(_mindListFromSnapshot);
+  }
+
+  // get user doc stream
+  Stream<CustomUserData> get userData {
+    return mindedCollection.doc(uid).snapshots().map(_userDataFromSnapshot);
   }
 }
