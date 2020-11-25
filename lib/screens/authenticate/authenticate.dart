@@ -24,7 +24,7 @@ class _AuthenticateState extends State<Authenticate> {
         ? Loading()
         : Scaffold(
             resizeToAvoidBottomPadding: false,
-            backgroundColor: Color(0xFFFFFFFF),
+            backgroundColor: mainColor,
             body: Container(
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -42,7 +42,7 @@ class _AuthenticateState extends State<Authenticate> {
                                 "Sign in",
                                 style: TextStyle(
                                   fontSize: 30.0,
-                                  color: Colors.black87,
+                                  color: Colors.white,
                                 ),
                               ),
                               SizedBox(height: 20.0),
@@ -75,12 +75,12 @@ class _AuthenticateState extends State<Authenticate> {
                                   children: <Widget>[
                                     Expanded(
                                       child: RaisedButton(
-                                        color: Color(0xFF001818),
+                                        color: Colors.white,
                                         child: Text(
                                           "Sign in",
                                           style: TextStyle(
                                               fontSize: 16.0,
-                                              color: Colors.white),
+                                              color: mainColor),
                                         ),
                                         onPressed: () async {
                                           if (_formKey.currentState
@@ -151,7 +151,7 @@ class _AuthenticateState extends State<Authenticate> {
                                   top: 0.0,
                                   child: Container(
                                     height: 10.0,
-                                    color: Colors.black87,
+                                    color: Colors.white,
                                   ),
                                 ),
                               ],
@@ -161,7 +161,7 @@ class _AuthenticateState extends State<Authenticate> {
                         Image(
                           fit: BoxFit.fitHeight,
                           image: AssetImage(
-                              'lib/assets/images/void_minded_black_logo.png'),
+                              'lib/assets/images/void_minded_white_logo.png'),
                         ),
                         Expanded(
                           flex: 1,
@@ -174,7 +174,7 @@ class _AuthenticateState extends State<Authenticate> {
                                   bottom: 0,
                                   child: Container(
                                     height: 10.0,
-                                    color: Colors.black87,
+                                    color: Colors.white,
                                   ),
                                 ),
                               ],
@@ -189,10 +189,10 @@ class _AuthenticateState extends State<Authenticate> {
                     child: Container(
                       padding: EdgeInsets.symmetric(vertical: 26.0, horizontal: 50.0),
                       child: RaisedButton(
-                        color: Color(0xFF001818),
+                        color: Colors.white,
                         child: Text(
                           "Sign in anonymously",
-                          style: TextStyle(fontSize: 16.0, color: Colors.white),
+                          style: TextStyle(fontSize: 16.0, color: mainColor),
                         ),
                         onPressed: () async {
                           setState(() => loading = true);

@@ -42,6 +42,7 @@ dependencies:
   # This is used to display animation during loading views
   animated_splash: ^1.0.0
   flutter_spinkit: ^4.1.2
+  simple_animations: ^2.3.1
 
   # The following is used to develop this application with a MVC approach
   mvc_pattern: 6.6.0

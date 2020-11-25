@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+const mainColor = Color(0xFF002424);
+
 const textInputDecoration = InputDecoration(
   hintText: "example@gmail.com",
   fillColor: Colors.white,
