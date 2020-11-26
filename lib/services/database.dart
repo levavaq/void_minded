@@ -8,13 +8,11 @@ class DatabaseService {
 
   DatabaseService({this.uid});
 
-  // collection reference
-  final CollectionReference mindCollection =
-      FirebaseFirestore.instance.collection("minds");
+  ///*** NOTE SERVICE ***///
 
   // collection reference
-  final Query noteCollection =
-      FirebaseFirestore.instance.collection("notes").orderBy('nameEng');
+  final CollectionReference mindCollection =
+  FirebaseFirestore.instance.collection("minds");
 
   Future updateUserData(String sugars, String name, int strength) async {
     return await mindCollection.doc(uid).set({
@@ -56,6 +54,11 @@ class DatabaseService {
   }
 
   ///*** NOTE SERVICE ***///
+  
+  // collection reference
+  final Query noteCollection =
+      FirebaseFirestore.instance.collection("notes").orderBy('nameEng');
+
   // note list from snapshot
   List<Note> _noteListFromSnapshot(QuerySnapshot snapshot) {
     return snapshot.docs.map((doc) {
