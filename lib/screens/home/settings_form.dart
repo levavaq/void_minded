@@ -13,9 +13,11 @@ class SettingsForm extends StatefulWidget {
 class _SettingsFormState extends State<SettingsForm> {
   final _formKey = GlobalKey<FormState>();
   final List<String> sugars = ["0", "1", "2", "3", "4"];
+  final List<String> notations = ["English", "Latin"];
 
   // form values
   String _currentName;
+  String _currentNotation;
   String _currentSugars;
   int _currentStrength;
 
@@ -56,6 +58,19 @@ class _SettingsFormState extends State<SettingsForm> {
                         setState(() => _currentSugars = value),
                   ),
                   SizedBox(height: 20.0),
+                  DropdownButtonFormField(
+                    decoration: textInputDecoration,
+                    value: _currentNotation ?? userData.notation,
+                    items: notations.map((notation) {
+                      return DropdownMenuItem(
+                        value: notation,
+                        child: Text("$notation"),
+                      );
+                    }).toList(),
+                    onChanged: (value) =>
+                        setState(() => _currentNotation = value),
+                  ),
+                  SizedBox(height: 20.0),
                   Slider(
                     value: (_currentStrength ?? userData.strength).toDouble(),
                     activeColor:
@@ -78,6 +93,7 @@ class _SettingsFormState extends State<SettingsForm> {
                         await DatabaseService(uid: user.uid).updateUserData(
                             _currentSugars ?? userData.sugars,
                             _currentName ?? userData.name,
+                            _currentNotation ?? userData.notation,
                             _currentStrength ?? userData.strength
                         );
                         Navigator.pop(context);

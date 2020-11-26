@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart';
 import 'package:provider/provider.dart';
 import 'package:void_minded/models/mind.dart';
+import 'package:void_minded/screens/features/dictionnary/dictionnary.dart';
 import 'package:void_minded/screens/home/minds_list.dart';
 import 'package:void_minded/screens/home/settings_form.dart';
 import 'package:void_minded/services/auth.dart';
@@ -145,7 +146,15 @@ class _HomeState extends State<Home> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
-                // A ENLEVER
+                RaisedButton(
+                  child: Text("GO TO DICTIONNARY"),
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => Dictionnary()),
+                    );
+                  },
+                ),
                 Expanded(flex: 1, child: MindsList()),
                 Container(
                     child: Column(children: <Widget>[

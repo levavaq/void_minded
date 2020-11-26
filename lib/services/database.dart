@@ -14,10 +14,11 @@ class DatabaseService {
   final CollectionReference mindCollection =
   FirebaseFirestore.instance.collection("minds");
 
-  Future updateUserData(String sugars, String name, int strength) async {
+  Future updateUserData(String sugars, String name, String notation, int strength) async {
     return await mindCollection.doc(uid).set({
       "sugars": sugars,
       "name": name,
+      "notation": notation,
       "strength": strength,
     });
   }
@@ -27,6 +28,7 @@ class DatabaseService {
     return snapshot.docs.map((doc) {
       return Mind(
         name: doc.data()["name"] ?? "",
+        notation: doc.data()["notation"] ?? "",
         strength: doc.data()["strength"] ?? 0,
         sugars: doc.data()["sugars"] ?? "0",
       );
@@ -38,6 +40,7 @@ class DatabaseService {
     return CustomUserData(
       uid: uid,
       name: snapshot.data()["name"],
+      notation: snapshot.data()["notation"],
       sugars: snapshot.data()["sugars"],
       strength: snapshot.data()["strength"],
     );
@@ -54,22 +57,49 @@ class DatabaseService {
   }
 
   ///*** NOTE SERVICE ***///
-  
-  // collection reference
-  final Query noteCollection =
-      FirebaseFirestore.instance.collection("notes").orderBy('nameEng');
+
+  // queries
+  final Query sNoteEnCollection =
+  FirebaseFirestore.instance.collection("notes").orderBy("nameEng").where("bemol", isEqualTo: false);
+  final Query sNoteLatCollection =
+  FirebaseFirestore.instance.collection("notes").orderBy("nameLat").where("bemol", isEqualTo: false);
+  final Query bNoteEnCollection =
+  FirebaseFirestore.instance.collection("notes").orderBy("nameEng").where("sharp", isEqualTo: false);
+  final Query bNoteLatCollection =
+  FirebaseFirestore.instance.collection("notes").orderBy("nameLat").where("sharp", isEqualTo: false);
 
   // note list from snapshot
-  List<Note> _noteListFromSnapshot(QuerySnapshot snapshot) {
+  List<Note> _notesEnListFromSnapshot(QuerySnapshot snapshot) {
     return snapshot.docs.map((doc) {
+      print(doc.data()["nameEng"]);
       return Note(
         name: doc.data()["nameEng"] ?? "",
       );
     }).toList();
   }
 
-  // get minds stream
-  Stream<List<Note>> get notes {
-    return noteCollection.snapshots().map(_noteListFromSnapshot);
+  List<Note> _notesLatListFromSnapshot(QuerySnapshot snapshot) {
+    return snapshot.docs.map((doc) {
+      return Note(
+        name: doc.data()["nameLat"] ?? "",
+      );
+    }).toList();
+  }
+
+  // get notes streams
+  Stream<List<Note>> get sNotesEn {
+    return sNoteEnCollection.snapshots().map(_notesEnListFromSnapshot);
+  }
+
+  Stream<List<Note>> get sNotesLat {
+    return sNoteLatCollection.snapshots().map(_notesLatListFromSnapshot);
+  }
+
+  Stream<List<Note>> get bNotesEn {
+    return bNoteEnCollection.snapshots().map(_notesEnListFromSnapshot);
+  }
+
+  Stream<List<Note>> get bNotesLat {
+    return bNoteLatCollection.snapshots().map(_notesLatListFromSnapshot);
   }
 }

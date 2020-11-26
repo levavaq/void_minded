@@ -17,7 +17,7 @@ class MindTile extends StatelessWidget {
             backgroundColor: Colors.brown[mind.strength],
           ),
           title: Text(mind.name),
-          subtitle: Text("Takes ${mind.sugars} sugar(s)"),
+          subtitle: Text("Notation : ${mind.notation}"),
         ),
       ),
     );
