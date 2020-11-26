@@ -14,9 +14,8 @@ class DatabaseService {
   final CollectionReference mindCollection =
   FirebaseFirestore.instance.collection("minds");
 
-  Future updateUserData(String sugars, String name, String notation, int strength) async {
+  Future updateUserData(String name, String notation, int strength) async {
     return await mindCollection.doc(uid).set({
-      "sugars": sugars,
       "name": name,
       "notation": notation,
       "strength": strength,
@@ -30,7 +29,6 @@ class DatabaseService {
         name: doc.data()["name"] ?? "",
         notation: doc.data()["notation"] ?? "",
         strength: doc.data()["strength"] ?? 0,
-        sugars: doc.data()["sugars"] ?? "0",
       );
     }).toList();
   }
@@ -41,7 +39,6 @@ class DatabaseService {
       uid: uid,
       name: snapshot.data()["name"],
       notation: snapshot.data()["notation"],
-      sugars: snapshot.data()["sugars"],
       strength: snapshot.data()["strength"],
     );
   }

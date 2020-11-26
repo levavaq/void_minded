@@ -10,8 +10,7 @@ class CustomUserData {
   final String uid;
   final String name;
   final String notation;
-  final String sugars;
   final int strength;
 
-  CustomUserData({this.uid, this.name, this.notation, this.sugars, this.strength});
+  CustomUserData({this.uid, this.name, this.notation, this.strength});
 }

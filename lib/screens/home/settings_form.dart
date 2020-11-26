@@ -12,13 +12,11 @@ class SettingsForm extends StatefulWidget {
 
 class _SettingsFormState extends State<SettingsForm> {
   final _formKey = GlobalKey<FormState>();
-  final List<String> sugars = ["0", "1", "2", "3", "4"];
   final List<String> notations = ["English", "Latin"];
 
   // form values
   String _currentName;
   String _currentNotation;
-  String _currentSugars;
   int _currentStrength;
 
   @override
@@ -43,19 +41,6 @@ class _SettingsFormState extends State<SettingsForm> {
                     validator: (value) =>
                         value.isEmpty ? "Please enter a name" : null,
                     onChanged: (value) => setState(() => _currentName = value),
-                  ),
-                  SizedBox(height: 20.0),
-                  DropdownButtonFormField(
-                    decoration: textInputDecoration,
-                    value: _currentSugars ?? userData.sugars,
-                    items: sugars.map((sugar) {
-                      return DropdownMenuItem(
-                        value: sugar,
-                        child: Text("$sugar sugars"),
-                      );
-                    }).toList(),
-                    onChanged: (value) =>
-                        setState(() => _currentSugars = value),
                   ),
                   SizedBox(height: 20.0),
                   DropdownButtonFormField(
@@ -91,7 +76,6 @@ class _SettingsFormState extends State<SettingsForm> {
                     onPressed: () async {
                       if(_formKey.currentState.validate()){
                         await DatabaseService(uid: user.uid).updateUserData(
-                            _currentSugars ?? userData.sugars,
                             _currentName ?? userData.name,
                             _currentNotation ?? userData.notation,
                             _currentStrength ?? userData.strength
