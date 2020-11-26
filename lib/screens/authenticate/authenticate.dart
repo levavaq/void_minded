@@ -1,3 +1,6 @@
+import 'dart:ui';
+
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:void_minded/animations/loading.dart';
 import 'package:void_minded/services/auth.dart';
@@ -24,31 +27,70 @@ class _AuthenticateState extends State<Authenticate> {
         ? Loading()
         : Scaffold(
             resizeToAvoidBottomPadding: false,
-            backgroundColor: mainColor,
             body: Container(
+              decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                      begin: Alignment.topLeft,
+                      end: Alignment.bottomRight,
+                      colors: [Color(0xFF001818), Color(0xFF228270)])),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
                   Expanded(
-                    flex: 7,
                     child: Container(
                       padding: EdgeInsets.symmetric(
-                          vertical: 150.0, horizontal: 50.0),
+                          vertical: 80.0, horizontal: 40.0),
                       child: Form(
                           key: _formKey,
                           child: Column(
                             children: <Widget>[
-                              Text(
-                                "Sign in",
-                                style: TextStyle(
-                                  fontSize: 30.0,
-                                  color: Colors.white,
+                              Align(
+                                alignment: Alignment.centerLeft,
+                                child: Container(
+                                  height: 40,
+                                  child: Image(
+                                    fit: BoxFit.fitHeight,
+                                    image: AssetImage(
+                                        'lib/assets/images/void_minded_white_logo.png'),
+                                  ),
                                 ),
                               ),
-                              SizedBox(height: 20.0),
+                              SizedBox(height: 60.0),
+                              Align(
+                                alignment: Alignment.centerLeft,
+                                child: Text(
+                                  "Welcome to",
+                                  style: textStyle.copyWith(
+                                    fontSize: 25.0,
+                                  ),
+                                ),
+                              ),
+                              Align(
+                                alignment: Alignment.centerLeft,
+                                child: Text(
+                                  "Void Minded.",
+                                  style: textStyle.copyWith(
+                                      fontSize: 35.0,
+                                      fontWeight: FontWeight.bold),
+                                ),
+                              ),
+                              SizedBox(height: 30.0),
+                              Align(
+                                alignment: Alignment.centerLeft,
+                                child: Text(
+                                  "For a better user experience please :",
+                                  style: textStyle,
+                                ),
+                              ),
+                              SizedBox(height: 10.0),
                               TextFormField(
+                                style: TextStyle(color: Colors.white),
                                 decoration: textInputDecoration.copyWith(
-                                    hintText: "Email"),
+                                  labelText: "E-Mail",
+                                  hintText: "example@gmail.com",
+                                  suffixIcon: Icon(Icons.alternate_email,
+                                      color: Colors.white),
+                                ),
                                 validator: (emailValue) => emailValue.isEmpty
                                     ? "Enter an email"
                                     : null,
@@ -56,10 +98,15 @@ class _AuthenticateState extends State<Authenticate> {
                                   setState(() => email = emailValue);
                                 },
                               ),
-                              SizedBox(height: 20.0),
+                              SizedBox(height: 10.0),
                               TextFormField(
+                                style: TextStyle(color: Colors.white),
                                 decoration: textInputDecoration.copyWith(
-                                    hintText: "Password"),
+                                  labelText: "Password",
+                                  suffixIcon: Icon(
+                                      Icons.account_circle_outlined,
+                                      color: Colors.white),
+                                ),
                                 obscureText: true,
                                 validator: (passwordValue) =>
                                     passwordValue.length < 6
@@ -70,21 +117,17 @@ class _AuthenticateState extends State<Authenticate> {
                                 },
                               ),
                               SizedBox(height: 20.0),
-                              Container(
-                                child: Row(
+                              Row(
                                   children: <Widget>[
                                     Expanded(
                                       child: RaisedButton(
-                                        color: Colors.white,
+                                        padding: EdgeInsets.symmetric(vertical: 12.0),
+                                        shape: raisedButtonShape,
                                         child: Text(
-                                          "Sign in",
-                                          style: TextStyle(
-                                              fontSize: 16.0,
-                                              color: mainColor),
+                                          "SIGN IN",
                                         ),
                                         onPressed: () async {
-                                          if (_formKey.currentState
-                                              .validate()) {
+                                          if (_formKey.currentState.validate()) {
                                             setState(() => loading = true);
                                             dynamic result = await _authService
                                                 .signInWithEmailAndPassword(
@@ -100,14 +143,40 @@ class _AuthenticateState extends State<Authenticate> {
                                         },
                                       ),
                                     ),
-                                    SizedBox(width: 12.0),
+                                  ],
+                                ),
+                              Row(
+                                children: <Widget>[
+                                  Expanded(
+                                    flex: 5,
+                                      child: Container(height: 1.0,color: Colors.white,),
+                                  ),
+                                  Expanded(
+                                    flex: 1,
+                                    child: Align(
+                                      alignment: Alignment.center,
+                                      child: Text(
+                                        "or",
+                                        style: textStyle,
+                                      ),
+                                    ),
+                                  ),
+                                  Expanded(
+                                    flex: 5,
+                                    child: Container(height: 1.0,color: Colors.white,),
+                                  ),
+                                ],
+                              ),
+                              Row(
+                                  children: <Widget>[
                                     Expanded(
                                       child: RaisedButton(
-                                        child: Text("Register",
-                                            style: TextStyle(fontSize: 16.0)),
+                                        padding: EdgeInsets.symmetric(vertical: 12.0),
+                                        shape: raisedButtonShape,
+                                        color: mainColor,
+                                        child: Text("REGISTER"),
                                         onPressed: () async {
-                                          if (_formKey.currentState
-                                              .validate()) {
+                                          if (_formKey.currentState.validate()) {
                                             setState(() => loading = true);
                                             dynamic result = await _authService
                                                 .registerWithEmailAndPassword(
@@ -122,91 +191,33 @@ class _AuthenticateState extends State<Authenticate> {
                                           }
                                         },
                                       ),
-                                    )
+                                    ),
                                   ],
                                 ),
-                              ),
                               SizedBox(height: 12.0),
                               Text(
                                 error,
                                 style: TextStyle(
                                     color: Colors.red, fontSize: 14.0),
                               ),
+                              SizedBox(height: 50.0),
+                              Align(
+                                alignment: Alignment.bottomLeft,
+                                child: Expanded(
+                                  child: Align(
+                                    alignment: Alignment.bottomCenter,
+                                    child: Text(
+                                      "Void Minded is now on development. If you "
+                                      "encounter a problem with the application, "
+                                      "please send it to the following email : "
+                                      "q.levavasseur@live.fr.",
+                                      style: textStyle,
+                                    ),
+                                  ),
+                                ),
+                              ),
                             ],
                           )),
-                    ),
-                  ),
-                  Container(
-                    height: 80,
-                    child: Row(
-                      children: <Widget>[
-                        Expanded(
-                          flex: 1,
-                          child: Container(
-                            child: Stack(
-                              children: <Widget>[
-                                Positioned(
-                                  left: 0,
-                                  right: 0,
-                                  top: 0.0,
-                                  child: Container(
-                                    height: 10.0,
-                                    color: Colors.white,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-                        Image(
-                          fit: BoxFit.fitHeight,
-                          image: AssetImage(
-                              'lib/assets/images/void_minded_white_logo.png'),
-                        ),
-                        Expanded(
-                          flex: 1,
-                          child: Container(
-                            child: Stack(
-                              children: <Widget>[
-                                Positioned(
-                                  left: 0,
-                                  right: 0,
-                                  bottom: 0,
-                                  child: Container(
-                                    height: 10.0,
-                                    color: Colors.white,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                  Expanded(
-                    flex: 1,
-                    child: Container(
-                      padding: EdgeInsets.symmetric(vertical: 26.0, horizontal: 50.0),
-                      child: RaisedButton(
-                        color: Colors.white,
-                        child: Text(
-                          "Sign in anonymously",
-                          style: TextStyle(fontSize: 16.0, color: mainColor),
-                        ),
-                        onPressed: () async {
-                          setState(() => loading = true);
-                          dynamic result =
-                              await _authService.signInAnonymously();
-                          if (result == null) {
-                            setState(() => loading = true);
-                            print("error signing in");
-                          } else {
-                            print("signed in");
-                            print(result.uid);
-                          }
-                        },
-                      ),
                     ),
                   ),
                 ],

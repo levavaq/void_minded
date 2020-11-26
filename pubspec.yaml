@@ -39,7 +39,8 @@ dependencies:
   cloud_firestore: ^0.14.3
   provider: ^4.3.2
 
-  # This is used to display animation during loading views
+  # This is used to display animation and graphics stuff
+  google_fonts: ^1.1.1
   animated_splash: ^1.0.0
   flutter_spinkit: ^4.1.2
   simple_animations: ^2.3.1
