@@ -8,6 +8,7 @@ import 'package:void_minded/screens/home/minds_list.dart';
 import 'package:void_minded/screens/home/settings_form.dart';
 import 'package:void_minded/services/auth.dart';
 import 'package:void_minded/services/database.dart';
+import 'package:void_minded/shared/constants.dart';
 
 class Home extends StatefulWidget {
   @override
@@ -125,133 +126,196 @@ class _HomeState extends State<Home> {
     return StreamProvider<List<Mind>>.value(
       value: DatabaseService().minds,
       child: Scaffold(
-          appBar: AppBar(
-            title: Text("Void Minded"),
-            actions: <Widget>[
-              FlatButton.icon(
-                icon: Icon(Icons.person),
-                label: Text("logout"),
-                onPressed: () async {
-                  await _authService.signOut();
+        appBar: AppBar(
+          title: Text(
+            "Void Minded",
+            style: TextStyle(color: Colors.white),
+          ),
+          backgroundColor: mainColor,
+          actions: <Widget>[
+            FlatButton.icon(
+              icon: Icon(
+                Icons.person,
+                color: Colors.white,
+              ),
+              label: Text(
+                "logout",
+                style: TextStyle(color: Colors.white),
+              ),
+              onPressed: () async {
+                await _authService.signOut();
+              },
+            ),
+            FlatButton.icon(
+              icon: Icon(
+                Icons.settings,
+                color: Colors.white,
+              ),
+              label: Text(
+                "settings",
+                style: TextStyle(color: Colors.white),
+              ),
+              onPressed: () => _showSettingsPanel(),
+            ),
+          ],
+        ),
+        body: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              RaisedButton(
+                child: Text("GO TO DICTIONNARY"),
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => Dictionnary()),
+                  );
                 },
               ),
-              FlatButton.icon(
-                icon: Icon(Icons.settings),
-                label: Text("settings"),
-                onPressed: () => _showSettingsPanel(),
+              Expanded(flex: 1, child: MindsList()),
+              Container(
+                  child: Column(children: <Widget>[
+                Text(
+                  '$chordName',
+                  style: Theme.of(context).textTheme.headline1,
+                ),
+                Text(
+                  '$jsonChord',
+                  style: Theme.of(context).textTheme.subtitle1,
+                ),
+              ])),
+              const Divider(
+                color: Colors.black,
+                height: 20,
+                thickness: 5,
+                indent: 20,
+                endIndent: 0,
               ),
-            ],
-          ),
-          body: Center(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                RaisedButton(
-                  child: Text("GO TO DICTIONNARY"),
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => Dictionnary()),
-                    );
-                  },
-                ),
-                Expanded(flex: 1, child: MindsList()),
-                Container(
+              Container(
+                child: Row(children: <Widget>[
+                  Expanded(
+                    flex: 1,
+                    child: DropdownButton<String>(
+                        items: _chords.map((String value) {
+                          return DropdownMenuItem<String>(
+                              value: value, child: Text(value));
+                        }).toList(),
+                        value: _currentChord,
+                        onChanged: (String value) {
+                          setState(() {
+                            _currentIndex = _chords.indexOf(value);
+                            this._currentChord = value;
+                            _changeChordName();
+                            _incrementCounter();
+                          });
+                        }),
+                  ),
+                  Expanded(
+                    flex: 1,
                     child: Column(children: <Widget>[
-                  Text(
-                    '$chordName',
-                    style: Theme.of(context).textTheme.headline1,
-                  ),
-                  Text(
-                    '$jsonChord',
-                    style: Theme.of(context).textTheme.subtitle1,
-                  ),
-                ])),
-                const Divider(
-                  color: Colors.black,
-                  height: 20,
-                  thickness: 5,
-                  indent: 20,
-                  endIndent: 0,
-                ),
-                Container(
-                  child: Row(children: <Widget>[
-                    Expanded(
-                      flex: 1,
-                      child: DropdownButton<String>(
-                          items: _chords.map((String value) {
-                            return DropdownMenuItem<String>(
-                                value: value, child: Text(value));
-                          }).toList(),
-                          value: _currentChord,
+                      for (var quality in _qualities)
+                        RadioListTile<String>(
+                          title: Text(quality),
+                          value: quality,
+                          groupValue: this._currentQuality,
                           onChanged: (String value) {
                             setState(() {
-                              _currentIndex = _chords.indexOf(value);
-                              this._currentChord = value;
+                              this._currentQuality = value;
                               _changeChordName();
                               _incrementCounter();
                             });
-                          }),
-                    ),
-                    Expanded(
+                          },
+                        ),
+                    ]),
+                  ),
+                  Expanded(
                       flex: 1,
                       child: Column(children: <Widget>[
-                        for (var quality in _qualities)
-                          RadioListTile<String>(
-                            title: Text(quality),
-                            value: quality,
-                            groupValue: this._currentQuality,
-                            onChanged: (String value) {
-                              setState(() {
-                                this._currentQuality = value;
-                                _changeChordName();
-                                _incrementCounter();
-                              });
-                            },
-                          ),
-                      ]),
-                    ),
-                    Expanded(
-                        flex: 1,
-                        child: Column(children: <Widget>[
-                          for (int i = 0; i < _tensions.length; i++)
-                            CheckboxListTile(
-                                title: Text(_tensions[i]),
-                                value: _isTensionsChecked[i],
-                                onChanged: (bool value) {
-                                  setState(() {
-                                    _isTensionsChecked[i] = value;
-                                    _updateCheckBoxTensionsState(i);
-                                    _changeCurrentTension();
-                                    _changeChordName();
-                                    _incrementCounter();
-                                  });
-                                })
-                        ])),
-                  ]),
+                        for (int i = 0; i < _tensions.length; i++)
+                          CheckboxListTile(
+                              title: Text(_tensions[i]),
+                              value: _isTensionsChecked[i],
+                              onChanged: (bool value) {
+                                setState(() {
+                                  _isTensionsChecked[i] = value;
+                                  _updateCheckBoxTensionsState(i);
+                                  _changeCurrentTension();
+                                  _changeChordName();
+                                  _incrementCounter();
+                                });
+                              })
+                      ])),
+                ]),
+              ),
+              Container(
+                  child: Column(children: <Widget>[
+                Text(
+                  'Choose your prefered notation',
                 ),
-                Container(
-                    child: Column(children: <Widget>[
-                  Text(
-                    'Choose your prefered notation',
-                  ),
-                  DropdownButton<String>(
-                      items: _notations.map((String value) {
-                        return DropdownMenuItem<String>(
-                            value: value, child: Text(value));
-                      }).toList(),
-                      value: _currentNotation,
-                      onChanged: (String value) {
-                        setState(() {
-                          this._currentNotation = value;
-                          _changeNotation();
-                        });
-                      })
-                ]))
-              ],
-            ),
-          ) // This trailing comma makes auto-formatting nicer for build methods.
+                DropdownButton<String>(
+                    items: _notations.map((String value) {
+                      return DropdownMenuItem<String>(
+                          value: value, child: Text(value));
+                    }).toList(),
+                    value: _currentNotation,
+                    onChanged: (String value) {
+                      setState(() {
+                        this._currentNotation = value;
+                        _changeNotation();
+                      });
+                    })
+              ]))
+            ],
           ),
+        ), // This trailing comma makes auto-formatting nicer for build methods.
+        drawer: Drawer(
+          // Add a ListView to the drawer. This ensures the user can scroll
+          // through the options in the drawer if there isn't enough vertical
+          // space to fit everything.
+          child: ListView(
+            // Important: Remove any padding from the ListView.
+            padding: EdgeInsets.zero,
+            children: <Widget>[
+              DrawerHeader(
+                child: Text(
+                  'Void Minded',
+                  style: TextStyle(color: Colors.white),
+                ),
+                decoration: BoxDecoration(
+                  color: mainColor,
+                ),
+              ),
+              ListTile(
+                title: Text('My compositions'),
+                onTap: () {
+                  // Update the state of the app
+                  // ...
+                  // Then close the drawer
+                  Navigator.pop(context);
+                },
+              ),
+              ListTile(
+                title: Text('My chords'),
+                onTap: () {
+                  // Update the state of the app
+                  // ...
+                  // Then close the drawer
+                  Navigator.pop(context);
+                },
+              ),
+              ListTile(
+                title: Text('Dictionnary'),
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => Dictionnary()),
+                  );
+                },
+              ),
+            ],
+          ),
+        ),
+      ),
     );
   }
 }
