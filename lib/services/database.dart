@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:void_minded/models/composition.dart';
 import 'package:void_minded/models/custom_user.dart';
 import 'package:void_minded/models/mind.dart';
 import 'package:void_minded/models/note.dart';
@@ -8,11 +9,11 @@ class DatabaseService {
 
   DatabaseService({this.uid});
 
-  ///*** NOTE SERVICE ***///
+  ///*** USER SERVICE ***///
 
   // collection reference
   final CollectionReference mindCollection =
-  FirebaseFirestore.instance.collection("minds");
+      FirebaseFirestore.instance.collection("minds");
 
   Future updateUserData(String name, String notation, int strength) async {
     return await mindCollection.doc(uid).set({
@@ -56,14 +57,22 @@ class DatabaseService {
   ///*** NOTE SERVICE ***///
 
   // queries
-  final Query sNoteEnCollection =
-  FirebaseFirestore.instance.collection("notes").orderBy("nameEng").where("bemol", isEqualTo: false);
-  final Query sNoteLatCollection =
-  FirebaseFirestore.instance.collection("notes").orderBy("nameLat").where("bemol", isEqualTo: false);
-  final Query bNoteEnCollection =
-  FirebaseFirestore.instance.collection("notes").orderBy("nameEng").where("sharp", isEqualTo: false);
-  final Query bNoteLatCollection =
-  FirebaseFirestore.instance.collection("notes").orderBy("nameLat").where("sharp", isEqualTo: false);
+  final Query sNoteEnCollection = FirebaseFirestore.instance
+      .collection("notes")
+      .orderBy("nameEng")
+      .where("bemol", isEqualTo: false);
+  final Query sNoteLatCollection = FirebaseFirestore.instance
+      .collection("notes")
+      .orderBy("nameLat")
+      .where("bemol", isEqualTo: false);
+  final Query bNoteEnCollection = FirebaseFirestore.instance
+      .collection("notes")
+      .orderBy("nameEng")
+      .where("sharp", isEqualTo: false);
+  final Query bNoteLatCollection = FirebaseFirestore.instance
+      .collection("notes")
+      .orderBy("nameLat")
+      .where("sharp", isEqualTo: false);
 
   // note list from snapshot
   List<Note> _notesEnListFromSnapshot(QuerySnapshot snapshot) {

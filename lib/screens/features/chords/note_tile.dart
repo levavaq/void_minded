@@ -3,7 +3,6 @@ import 'package:void_minded/models/note.dart';
 
 class NoteTile extends StatelessWidget {
   final Note note;
-
   NoteTile({this.note});
 
   @override

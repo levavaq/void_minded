@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:void_minded/models/note.dart';
+import 'package:void_minded/models/composition.dart';
 
-class NoteTile extends StatelessWidget {
-  final Note note;
+class CompositionTile extends StatelessWidget {
+  final Composition composition;
 
-  NoteTile({this.note});
+  CompositionTile({this.composition});
 
   @override
   Widget build(BuildContext context) {
@@ -13,7 +13,8 @@ class NoteTile extends StatelessWidget {
       child: Card(
         margin: EdgeInsets.fromLTRB(20.0, 6.0, 20.0, 0.0),
         child: ListTile(
-          title: Text(note.name),
+          title: Text(composition.name),
+          subtitle: Text(composition.compositor),
         ),
       ),
     );

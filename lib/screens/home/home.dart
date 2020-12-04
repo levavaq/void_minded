@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart';
 import 'package:provider/provider.dart';
 import 'package:void_minded/models/mind.dart';
+import 'package:void_minded/screens/features/compositions/my_composition.dart';
 import 'package:void_minded/screens/features/dictionnary/dictionnary.dart';
 import 'package:void_minded/screens/home/minds_list.dart';
 import 'package:void_minded/screens/home/settings_form.dart';
@@ -288,10 +289,10 @@ class _HomeState extends State<Home> {
               ListTile(
                 title: Text('My compositions'),
                 onTap: () {
-                  // Update the state of the app
-                  // ...
-                  // Then close the drawer
-                  Navigator.pop(context);
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => MyComposition()),
+                  );
                 },
               ),
               ListTile(
