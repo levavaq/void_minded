@@ -7,7 +7,7 @@ import 'package:void_minded/models/custom_user.dart';
 import 'package:void_minded/screens/features/compositions/compositions_list.dart';
 import 'package:void_minded/services/auth.dart';
 import 'package:void_minded/services/composition_service.dart';
-import 'package:void_minded/services/database.dart';
+import 'package:void_minded/services/mind_service.dart';
 
 class MyComposition extends StatefulWidget {
   @override
@@ -26,7 +26,7 @@ class _MyCompositionState extends State<MyComposition> {
     final user = Provider.of<CustomUser>(context);
 
     return StreamBuilder<CustomUserData>(
-        stream: DatabaseService(uid: user.uid).userData,
+        stream: MindService(uid: user.uid).userData,
         builder: (context, snapshot) {
           if (snapshot.hasData) {
             CustomUserData userData = snapshot.data;

@@ -8,7 +8,7 @@ import 'package:void_minded/screens/features/dictionnary/dictionnary.dart';
 import 'package:void_minded/screens/home/minds_list.dart';
 import 'package:void_minded/screens/home/settings_form.dart';
 import 'package:void_minded/services/auth.dart';
-import 'package:void_minded/services/database.dart';
+import 'package:void_minded/services/mind_service.dart';
 import 'package:void_minded/shared/constants.dart';
 
 class Home extends StatefulWidget {
@@ -125,7 +125,7 @@ class _HomeState extends State<Home> {
     }
 
     return StreamProvider<List<Mind>>.value(
-      value: DatabaseService().minds,
+      value: MindService().minds,
       child: Scaffold(
         appBar: AppBar(
           title: Text(

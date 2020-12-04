@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:void_minded/animations/loading.dart';
 import 'package:void_minded/models/custom_user.dart';
-import 'package:void_minded/services/database.dart';
+import 'package:void_minded/services/mind_service.dart';
 import 'package:void_minded/shared/constants.dart';
 
 class SettingsForm extends StatefulWidget {
@@ -24,7 +24,7 @@ class _SettingsFormState extends State<SettingsForm> {
     final user = Provider.of<CustomUser>(context);
 
     return StreamBuilder<CustomUserData>(
-        stream: DatabaseService(uid: user.uid).userData,
+        stream: MindService(uid: user.uid).userData,
         builder: (context, snapshot) {
           if (snapshot.hasData) {
             CustomUserData userData = snapshot.data;
@@ -75,7 +75,7 @@ class _SettingsFormState extends State<SettingsForm> {
                         Text("Update", style: TextStyle(color: Colors.white)),
                     onPressed: () async {
                       if(_formKey.currentState.validate()){
-                        await DatabaseService(uid: user.uid).updateUserData(
+                        await MindService(uid: user.uid).updateUserData(
                             _currentName ?? userData.name,
                             _currentNotation ?? userData.notation,
                             _currentStrength ?? userData.strength

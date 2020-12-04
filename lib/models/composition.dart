@@ -4,7 +4,9 @@ class Composition {
   final String uid;
   final String compositor;
   final String name;
+  final String creationDate;
+  final String lastModified;
   final List<Chord> chords;
 
-  Composition({this.uid, this.compositor, this.name, this.chords});
+  Composition({this.uid, this.compositor, this.name, this.creationDate, this.lastModified, this.chords});
 }

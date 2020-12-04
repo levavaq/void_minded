@@ -5,7 +5,8 @@ import 'package:void_minded/models/custom_user.dart';
 import 'package:void_minded/models/note.dart';
 import 'package:void_minded/screens/features/dictionnary/notes_list.dart';
 import 'package:void_minded/services/auth.dart';
-import 'package:void_minded/services/database.dart';
+import 'package:void_minded/services/mind_service.dart';
+import 'package:void_minded/services/note_service.dart';
 
 class Dictionnary extends StatefulWidget {
   @override
@@ -17,9 +18,9 @@ class _DictionnaryState extends State<Dictionnary> {
 
   Stream<List<Note>> getList(CustomUserData userData) {
     if (userData.notation != "Latin") {
-      return DatabaseService().sNotesEn;
+      return NoteService().sNotesEn;
     } else {
-      return DatabaseService().sNotesLat;
+      return NoteService().sNotesLat;
     }
   }
 
@@ -28,7 +29,7 @@ class _DictionnaryState extends State<Dictionnary> {
     final user = Provider.of<CustomUser>(context);
 
     return StreamBuilder<CustomUserData>(
-        stream: DatabaseService(uid: user.uid).userData,
+        stream: MindService(uid: user.uid).userData,
         builder: (context, snapshot) {
           if (snapshot.hasData) {
             CustomUserData userData = snapshot.data;

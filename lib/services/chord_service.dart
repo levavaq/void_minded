@@ -1,21 +1,21 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:void_minded/models/composition.dart';
-import 'package:void_minded/services/mind_service.dart';
 
-class CompositionService {
+class ChordService {
   final String uid;
 
-  CompositionService({this.uid});
+  ChordService({this.uid});
 
   // collection reference
   final CollectionReference compositionCollection =
-      FirebaseFirestore.instance.collection("compositions");
+      FirebaseFirestore.instance.collection("chords");
 
   // composition list from snapshot
   List<Composition> _compositionListFromSnapshot(QuerySnapshot snapshot) {
     return snapshot.docs.map((doc) {
+      print(doc.data()["compositor"]);
       return Composition(
-        compositor: doc.data()["compositor"] ?? "",
+        compositor: doc.data()["compositor"] ?? uid,
         name: doc.data()["name"] ?? "",
       );
     }).toList();
@@ -34,7 +34,7 @@ class CompositionService {
     Query myCompositionsCollection = FirebaseFirestore.instance
         .collection("compositions")
         .orderBy("lastModified", descending: true)
-        .where("compositor", isEqualTo: MindService().mindCollection.doc(uid));
+        .where("compositor", isEqualTo: this.uid);
 
     return myCompositionsCollection
         .snapshots()
