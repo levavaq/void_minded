@@ -4,7 +4,6 @@ import 'package:void_minded/animations/loading.dart';
 import 'package:void_minded/models/composition.dart';
 import 'package:void_minded/models/custom_user.dart';
 import 'package:void_minded/screens/features/compositions/compositions_list.dart';
-import 'package:void_minded/services/auth.dart';
 import 'package:void_minded/services/composition_service.dart';
 import 'package:void_minded/services/mind_service.dart';
 
