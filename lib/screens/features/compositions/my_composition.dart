@@ -1,4 +1,3 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:void_minded/animations/loading.dart';
@@ -15,8 +14,6 @@ class MyComposition extends StatefulWidget {
 }
 
 class _MyCompositionState extends State<MyComposition> {
-  final AuthService _authService = AuthService();
-
   Stream<List<Composition>> getList(String uid) {
     return CompositionService(uid: uid).compositions;
   }
