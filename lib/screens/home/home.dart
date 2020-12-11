@@ -6,8 +6,6 @@ import 'package:void_minded/models/mind.dart';
 import 'package:void_minded/screens/features/compositions/my_composition.dart';
 import 'package:void_minded/screens/features/dictionnary/dictionnary.dart';
 import 'package:void_minded/screens/features/settings/settings_form.dart';
-import 'package:void_minded/screens/home/minds_list.dart';
-import 'package:void_minded/services/auth.dart';
 import 'package:void_minded/services/mind_service.dart';
 import 'package:void_minded/shared/constants.dart';
 

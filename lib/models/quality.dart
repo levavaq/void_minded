@@ -1,7 +1,17 @@
 enum Quality {
   MAJOR,
   MINOR,
+}
 
-  // to get the string value of an enum object :
-  // String day = theDay.toString().split('.').last;
+extension QualityExtension on Quality {
+  String get name {
+    switch (this) {
+      case Quality.MAJOR:
+        return "MAJOR";
+      case Quality.MINOR:
+        return "MINOR";
+      default:
+        return null;
+    }
+  }
 }

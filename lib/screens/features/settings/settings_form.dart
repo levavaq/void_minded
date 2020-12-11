@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:void_minded/animations/loading.dart';
 import 'package:void_minded/models/custom_user.dart';
+import 'package:void_minded/models/notation.dart';
 import 'package:void_minded/services/auth.dart';
 import 'package:void_minded/services/mind_service.dart';
 import 'package:void_minded/shared/constants.dart';
@@ -15,12 +16,19 @@ class _SettingsFormState extends State<SettingsForm> {
   final AuthService _authService = AuthService();
 
   final _formKey = GlobalKey<FormState>();
-  final List<String> notations = ["English", "Latin"];
 
   // form values
   String _currentName;
-  String _currentNotation;
+  Notation _currentNotation;
   int _currentStrength;
+
+  Notation getUserNotation(CustomUserData userData) {
+    if (userData.notation != "Latin") {
+      return Notation.English;
+    } else {
+      return Notation.Latin;
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -53,17 +61,24 @@ class _SettingsFormState extends State<SettingsForm> {
                               setState(() => _currentName = value),
                         ),
                         SizedBox(height: 20.0),
-                        DropdownButtonFormField(
+                        DropdownButtonFormField<Notation>(
                           decoration: textInputDecoration,
-                          value: _currentNotation ?? userData.notation,
-                          items: notations.map((notation) {
-                            return DropdownMenuItem(
+                          value: _currentNotation ?? getUserNotation(userData),
+                          items: Notation.values.map((Notation notation) {
+                            return DropdownMenuItem<Notation>(
                               value: notation,
-                              child: Text("$notation"),
+                              child: Text(notation.name),
                             );
                           }).toList(),
-                          onChanged: (value) =>
-                              setState(() => _currentNotation = value),
+                          onChanged: (Notation value) {
+                            _currentNotation = value;
+                            if (_formKey.currentState.validate()) {
+                              MindService(uid: user.uid).updateUserData(
+                                  _currentName ?? userData.name,
+                                  _currentNotation.name ?? userData.notation,
+                                  _currentStrength ?? userData.strength);
+                            }
+                          },
                         ),
                         SizedBox(height: 20.0),
                         Slider(
@@ -81,25 +96,10 @@ class _SettingsFormState extends State<SettingsForm> {
                         ),
                         SizedBox(height: 20.0),
                         RaisedButton(
-                          color: Colors.pink[400],
-                          child: Text("Update",
-                              style: TextStyle(color: Colors.white)),
-                          onPressed: () async {
-                            if (_formKey.currentState.validate()) {
-                              await MindService(uid: user.uid).updateUserData(
-                                  _currentName ?? userData.name,
-                                  _currentNotation ?? userData.notation,
-                                  _currentStrength ?? userData.strength);
-                              Navigator.pop(context);
-                            }
-                          },
-                        ),
-                        RaisedButton(
                           padding: EdgeInsets.symmetric(vertical: 12.0),
                           shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(20.0),
-                              side: BorderSide(color: Colors.white)
-                          ),
+                              side: BorderSide(color: Colors.white)),
                           color: mainColor,
                           child: Text("LOG OUT"),
                           onPressed: () async {
