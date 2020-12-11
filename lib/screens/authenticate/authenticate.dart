@@ -13,6 +13,7 @@ class Authenticate extends StatefulWidget {
 
 class _AuthenticateState extends State<Authenticate> {
   final AuthService _authService = AuthService();
+
   final _formKey = GlobalKey<FormState>();
   bool loading = false;
 

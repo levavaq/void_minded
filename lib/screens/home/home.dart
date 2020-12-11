@@ -5,8 +5,8 @@ import 'package:provider/provider.dart';
 import 'package:void_minded/models/mind.dart';
 import 'package:void_minded/screens/features/compositions/my_composition.dart';
 import 'package:void_minded/screens/features/dictionnary/dictionnary.dart';
+import 'package:void_minded/screens/features/settings/settings_form.dart';
 import 'package:void_minded/screens/home/minds_list.dart';
-import 'package:void_minded/screens/home/settings_form.dart';
 import 'package:void_minded/services/auth.dart';
 import 'package:void_minded/services/mind_service.dart';
 import 'package:void_minded/shared/constants.dart';
@@ -17,8 +17,6 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-  final AuthService _authService = AuthService();
-
   final _notations = ["English", "Latin/Standard"];
   String _currentNotation = "English";
 
@@ -113,17 +111,6 @@ class _HomeState extends State<Home> {
 
   @override
   Widget build(BuildContext context) {
-    void _showSettingsPanel() {
-      showModalBottomSheet(
-          context: context,
-          builder: (context) {
-            return Container(
-              padding: EdgeInsets.symmetric(vertical: 20.0, horizontal: 60.0),
-              child: SettingsForm(),
-            );
-          });
-    }
-
     return StreamProvider<List<Mind>>.value(
       value: MindService().minds,
       child: Scaffold(
@@ -133,47 +120,11 @@ class _HomeState extends State<Home> {
             style: TextStyle(color: Colors.white),
           ),
           backgroundColor: mainColor,
-          actions: <Widget>[
-            FlatButton.icon(
-              icon: Icon(
-                Icons.person,
-                color: Colors.white,
-              ),
-              label: Text(
-                "logout",
-                style: TextStyle(color: Colors.white),
-              ),
-              onPressed: () async {
-                await _authService.signOut();
-              },
-            ),
-            FlatButton.icon(
-              icon: Icon(
-                Icons.settings,
-                color: Colors.white,
-              ),
-              label: Text(
-                "settings",
-                style: TextStyle(color: Colors.white),
-              ),
-              onPressed: () => _showSettingsPanel(),
-            ),
-          ],
         ),
         body: Center(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
-              RaisedButton(
-                child: Text("GO TO DICTIONNARY"),
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => Dictionnary()),
-                  );
-                },
-              ),
-              Expanded(flex: 1, child: MindsList()),
               Container(
                   child: Column(children: <Widget>[
                 Text(
@@ -310,6 +261,15 @@ class _HomeState extends State<Home> {
                   Navigator.push(
                     context,
                     MaterialPageRoute(builder: (context) => Dictionnary()),
+                  );
+                },
+              ),
+              ListTile(
+                title: Text('Settings'),
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => SettingsForm()),
                   );
                 },
               ),
